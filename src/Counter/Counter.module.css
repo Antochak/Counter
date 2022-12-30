@@ -1,0 +1,79 @@
+html {
+    width: 100%;
+    height: 100%;
+    background-color: #282c34;
+}
+.mainBlock {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    margin: 100px auto;
+}
+.display {
+    border: 3px solid deepskyblue;
+    height: 350px;
+    width: 500px;
+    border-radius: 20px;
+    margin: 0 auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.view {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: deepskyblue;
+    border-radius: 20px;
+    width: 100%;
+    height: 70%;
+
+    color: #282c34;
+    font-size: 64px;
+    font-weight: 600;
+}
+.buttonsContainer {
+    display: flex;
+    flex-direction: row;
+    height: 30%;
+    width: 90%;
+    justify-content: space-between;
+    align-items: center;
+}
+.button {
+    height: 45%;
+    width: 20%;
+    border-radius: 10px;
+    background-color: #282c34;
+    color: deepskyblue;
+    border: 3px solid deepskyblue;
+    font-size: 20px;
+    font-weight: 600;
+}
+.button:active {
+    background-color: deepskyblue;
+    color: #282c34;
+}
+.red {
+    color: red;
+}
+.disabled {
+    opacity: 0.5;
+    height: 45%;
+    width: 20%;
+    border-radius: 10px;
+    color: deepskyblue;
+    border: 3px solid deepskyblue;
+    font-size: 20px;
+    font-weight: 600;
+}
+.inputBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: deepskyblue;
+    font-weight: 600;
+}
