@@ -1,13 +1,59 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {Counter} from "./Counter/Counter";
-
-
+import {Settings} from "./Counter/Settings";
 
 function App() {
+    const [startValue, setStartValue] = useState<number>(JSON.parse(localStorage.getItem('startValue') || '0'))
+    const [maxValue, setMaxValue] = useState<number>(JSON.parse(localStorage.getItem('maxValue') || '0'))
+    const [count, setCount] = useState(startValue)
+
+    useEffect(()=> {
+        localStorage.setItem('maxValue', JSON.stringify(maxValue))
+    },[maxValue])
+    useEffect(()=> {
+        let stringMaxValue = localStorage.getItem('maxValue')
+        if(stringMaxValue){
+            let newMaxValue:number = JSON.parse(stringMaxValue)
+            setMaxValue(newMaxValue)
+        }
+    },[])
+
+    useEffect(()=> {
+        localStorage.setItem('startValue', JSON.stringify(startValue))
+    },[startValue])
+    useEffect(()=> {
+        let stringValue = localStorage.getItem('startValue')
+        if(stringValue){
+            let newValue:number = JSON.parse(stringValue)
+            setStartValue(newValue)
+        }
+    },[])
+
+    const maxValueCallback = (valueMax: number) => {
+        setMaxValue(valueMax)
+    }
+    const startValueCallback = (valueStart: number) => {
+        setStartValue(valueStart)
+    }
+
   return (
-    <Counter/>
+      <div className={'mainApp'}>
+        <Counter startValue={startValue}
+                 setStartValue={setStartValue}
+                 maxValue={maxValue}
+                 count={count}
+                 setCount={setCount}/>
+        <Settings MaxValue={maxValue}
+                  startValue={startValue}
+                  setCount={setCount}
+                  startValueCallback={startValueCallback}
+                  maxValueCallback={maxValueCallback}/>
+      </div>
   );
 }
 
 export default App;
+
+
+// localStorage.getItem('startValue') != null ? JSON.parse(localStorage.getItem('startValue') || '0') : 0

@@ -1,45 +1,42 @@
 import React, {ChangeEvent, useState} from "react";
 import classes from "./Counter.module.css";
 import {Button} from "./Button";
+import {Settings} from "./Settings";
 
-export const Counter = () => {
-    const [count, setCount] = useState<number>(0)
-    const [inputValue, setInputValue] = useState<number>(0)
-    let countClassName = count == inputValue ? classes.red : ''
+type CounterPropsType = {
+    startValue: number
+    setStartValue: (startValue: number)=>void
+    maxValue: number
+    setCount:(count:number)=>void
+    count: number
+}
+
+export const Counter = (props: CounterPropsType) => {
+    let countClassName = props.count == props.maxValue ? classes.red : ''
 
     const counterInc = () => {
-        if (count <= inputValue) {
-            setCount(count + 1)
+        if (props.startValue <= props.maxValue) {
+            props.setCount(props.count + 1)
         }
     }
     const counterClear = () => {
-        setCount(0)
+        props.setCount(props.startValue)
     }
-    const onChandeInput = (e: ChangeEvent<HTMLInputElement>) => {
-        setInputValue(+e.currentTarget.value)
-    }
+
     return (
         <div className={classes.mainBlock}>
             <div className={classes.display}>
                 <div className={classes.view }>
                     <div className={countClassName}>
-                        {count}
+                        {props.count}
                     </div>
                 </div>
                 <div className={classes.buttonsContainer}>
-                    <Button name={'Inc'} callback={counterInc}  disabled={count == inputValue}/>
-                    <div className={classes.inputBlock}>
-                        Введите максимальное значение:
-                        <input type={'number'} onChange={onChandeInput} value={inputValue}/>
-                        max = {inputValue}
-                    </div>
-                    <Button name={'Reset'} callback={counterClear} disabled={count == 0}/>
-                </div>
-                <div >
-
-
+                    <Button name={'Inc'} callback={counterInc} disabled={props.count === props.maxValue}/>
+                    <Button name={'Reset'} callback={counterClear}/>
                 </div>
             </div>
+
         </div>
     )
 }
