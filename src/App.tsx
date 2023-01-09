@@ -7,6 +7,9 @@ function App() {
     const [startValue, setStartValue] = useState<number>(JSON.parse(localStorage.getItem('startValue') || '0'))
     const [maxValue, setMaxValue] = useState<number>(JSON.parse(localStorage.getItem('maxValue') || '0'))
     const [count, setCount] = useState(startValue)
+    const [disabled, setDisabled] = useState(false)
+    const [max,setMax]=useState(maxValue)
+    const [start,setStart]=useState(startValue)
 
     useEffect(()=> {
         localStorage.setItem('maxValue', JSON.stringify(maxValue))
@@ -36,19 +39,28 @@ function App() {
     const startValueCallback = (valueStart: number) => {
         setStartValue(valueStart)
     }
-
   return (
       <div className={'mainApp'}>
         <Counter startValue={startValue}
                  setStartValue={setStartValue}
                  maxValue={maxValue}
                  count={count}
-                 setCount={setCount}/>
+                 setCount={setCount}
+                 disabled={disabled || maxValue == count}
+                 setMax={setMax}
+                 setStart={setStart}
+                 max={max}
+                 start={start}/>
         <Settings MaxValue={maxValue}
                   startValue={startValue}
                   setCount={setCount}
+                  setDisabled={setDisabled}
                   startValueCallback={startValueCallback}
-                  maxValueCallback={maxValueCallback}/>
+                  maxValueCallback={maxValueCallback}
+                  setStart={setStart}
+                  setMax={setMax}
+                  max={max}
+                  start={start}/>
       </div>
   );
 }

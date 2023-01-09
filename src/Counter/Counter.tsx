@@ -9,6 +9,11 @@ type CounterPropsType = {
     maxValue: number
     setCount:(count:number)=>void
     count: number
+    disabled: boolean
+    max: number
+    start: number
+    setMax:(max: number)=>void
+    setStart:( start: number)=>void
 }
 
 export const Counter = (props: CounterPropsType) => {
@@ -27,12 +32,12 @@ export const Counter = (props: CounterPropsType) => {
         <div className={classes.mainBlock}>
             <div className={classes.display}>
                 <div className={classes.view }>
-                    <div className={countClassName}>
-                        {props.count}
-                    </div>
+                        {props.maxValue !== props.max || props.startValue !== props.start
+                            ? <span className={classes.errorText}>"Enter Values and press 'SET'"</span>
+                            : <div className={countClassName}>{props.count}</div>}
                 </div>
                 <div className={classes.buttonsContainer}>
-                    <Button name={'Inc'} callback={counterInc} disabled={props.count === props.maxValue}/>
+                    <Button name={'Inc'} callback={counterInc} disabled={props.disabled}/>
                     <Button name={'Reset'} callback={counterClear}/>
                 </div>
             </div>

@@ -8,44 +8,59 @@ type InputsPropsType = {
     MaxValue: number
     startValue: number
     setCount:(count: number)=>void
+    setDisabled:(value: boolean)=>void
+    max: number
+    start: number
+    setMax:(max: number)=>void
+    setStart:( start: number)=>void
 }
 
 export const Settings = (props: InputsPropsType) => {
-    const [max,setMax]=useState(props.MaxValue)
-    const [start,setStart]=useState(props.startValue)
+    let errorInput = (props.start < 0 || props.max < 0) ? classes.red : ''
+    let disabled = props.max < props.start || props.start < 0 || props.max < 0
 
     const onChandeInputMaxHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setMax(+e.currentTarget.value)
+        props.setMax(+e.currentTarget.value)
+        props.setDisabled(true)
     }
     const onChangeInputStartHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setStart(+e.currentTarget.value)
+        props.setStart(+e.currentTarget.value)
+        props.setDisabled(true)
     }
     const saveSettings = () => {
-        props.maxValueCallback(max)
-        props.startValueCallback(start)
-        props.setCount(start)
+        props.maxValueCallback(props.max)
+        props.startValueCallback(props.start)
+        props.setCount(props.start)
+        props.setDisabled(false)
     }
-
+   
     return (
         <div className={classes.mainBlock}>
             <div className={classes.display}>
                 <div className={classes.view }>
                     <div className={classes.inputBlock}>
                         Введите максимальное значение:
-                        <input type={'number'} onChange={onChandeInputMaxHandler} value={max}/>
-                        max = {max}
+                        <input type={'number'}
+                               onChange={onChandeInputMaxHandler}
+                               value={props.max}
+                               className={errorInput}/>
+                        max = {props.max}
                     </div>
                     <div className={classes.inputBlock}>
                         Введите Стартовое значение:
-                        <input type={'number'} onChange={onChangeInputStartHandler} value={start}/>
-                        start = {start}
+                        <input type={'number'}
+                               onChange={onChangeInputStartHandler}
+                               value={props.start}
+                               className={errorInput}/>
+                        start = {props.start}
                     </div>
                 </div>
                 <div className={classes.buttonsContainer}>
-                    <Button name={'Set'} callback={saveSettings} />
+                    <Button name={'Set'}
+                            callback={saveSettings}
+                            disabled={disabled}/>
                 </div>
             </div>
-
         </div>
     )
 }

@@ -36,6 +36,11 @@ html {
     font-size: 64px;
     font-weight: 600;
 }
+.view span {
+    font-size: 12px;
+    font-weight: 600;
+    color: red;
+}
 .buttonsContainer {
     display: flex;
     flex-direction: row;
