@@ -1,39 +1,35 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent} from "react";
 import classes from "./Settings.module.css";
 import {Button} from "./Button";
+import {useDispatch} from "react-redux";
+import {setCounterAC,setMaxValueToLocalStorageAC,setStartValueToLocalStorageAC} from "../bll/counter-reducer";
 
-type InputsPropsType = {
-    maxValueCallback: (inputMaxValue: number)=>void
-    startValueCallback: (inputStartValue: number)=>void
-    MaxValue: number
-    startValue: number
-    setCount:(count: number)=>void
-    setDisabled:(value: boolean)=>void
+type SettingsPropsType = {
+    setStart: (start: number)=>void
+    setMax: (max: number)=>void
     max: number
     start: number
-    setMax:(max: number)=>void
-    setStart:( start: number)=>void
 }
+export const Settings = (props: SettingsPropsType) => {
 
-export const Settings = (props: InputsPropsType) => {
     let errorInput = (props.start < 0 || props.max < 0) ? classes.red : ''
     let disabled = props.max < props.start || props.start < 0 || props.max < 0
+    const dispatch = useDispatch()
 
     const onChandeInputMaxHandler = (e: ChangeEvent<HTMLInputElement>) => {
         props.setMax(+e.currentTarget.value)
-        props.setDisabled(true)
     }
     const onChangeInputStartHandler = (e: ChangeEvent<HTMLInputElement>) => {
         props.setStart(+e.currentTarget.value)
-        props.setDisabled(true)
     }
     const saveSettings = () => {
-        props.maxValueCallback(props.max)
-        props.startValueCallback(props.start)
-        props.setCount(props.start)
-        props.setDisabled(false)
+        dispatch(setMaxValueToLocalStorageAC(props.max))
+        dispatch(setStartValueToLocalStorageAC(props.start))
+        localStorage.setItem('startValue', props.start.toString())
+        localStorage.setItem('maxValue', props.max.toString())
+        dispatch(setCounterAC(props.start))
     }
-   
+
     return (
         <div className={classes.mainBlock}>
             <div className={classes.display}>
